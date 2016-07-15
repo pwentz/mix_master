@@ -1,2 +1,2 @@
-%h5= @artist.name
-= image_tag @artist.image_path
+%h5#artist_name= @artist.name
+= image_tag @artist.image_path, :id => "artist_image"

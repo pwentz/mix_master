@@ -4,13 +4,13 @@ class ArtistsController < ApplicationController
   end
 
   def new
-
+    @artist = Artist.new
   end
 
   def create
-    artist = Artist.new(article_params)
-    if artist.save
-      redirect_to artist_path(artist.id)
+    @artist = Artist.new(article_params)
+    if @artist.save
+      redirect_to artist_path(@artist)
     else
       render :new
     end
@@ -18,6 +18,16 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
+  end
+
+  def edit
+    @artist = Artist.find(params[:id])
+  end
+
+  def update
+    artist = Artist.find(params[:id])
+    artist.update_attributes(article_params)
+    redirect_to artist_path(artist)
   end
 
   private
