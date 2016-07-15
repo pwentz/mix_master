@@ -30,6 +30,11 @@ class ArtistsController < ApplicationController
     redirect_to artist_path(artist)
   end
 
+  def destroy
+    Artist.find(params[:id]).destroy
+    redirect_to artists_path
+  end
+
   private
 
   def article_params
