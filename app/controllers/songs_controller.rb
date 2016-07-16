@@ -7,14 +7,18 @@ class SongsController < ApplicationController
     @song = Song.new
   end
 
+  def show
+    @song = Song.find(params["id"])
+  end
+
   def create
     @song = Song.new(song_params)
     if @song.save
       flash.notice = "Song created!"
-      redirect_to songs_path
+      redirect_to artist_songs_path(song.article_id)
     else
       flash.notice = "Songs must have a valid title"
-      redirect_to new_song_path
+      redirect_to new_artist_song_path(song.article_id)
     end
   end
 

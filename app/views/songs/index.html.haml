@@ -1,9 +1,2 @@
 %h4 All songs!
-
-%ul#songs_list
-  - @songs.each do |song|
-    %li
-      = link_to song.title, song_path(song)
-
-= link_to 'Create new song', new_song_path, :id => 'new_song_link'
-
+= link_to 'Create new song', new_artist_song_path(@songs.artist.id), :id => 'new_song_link'
