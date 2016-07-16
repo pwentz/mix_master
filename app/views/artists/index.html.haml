@@ -1,0 +1,10 @@
+%h5 All Artists
+
+%ul#artists_list
+  - @artists.each do |artist|
+    %li#artists_name
+      = link_to artist.name, artist_path(artist)
+    %li#artists_image_path
+      = link_to artist.image_path, artist.image_path
+
+%li= link_to "New Artist", new_artist_path
