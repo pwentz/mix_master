@@ -29,14 +29,14 @@ describe "user creates a new song", :type => :feature do
       click_button "Create Song"
     end
 
-    expect(current_path).to eq(artist_songs_path(artist.id))
+    expect(current_path).to eq(artist_path(artist.id))
   end
 
   scenario "they create a valid song and can see song title and link" do
     artist = Artist.create(name: "The Fugees", image_path: "http://static.tvtropes.org/pmwiki/pub/images/the-fugees_4802.jpg" )
-    Song.create(title: "Killing Me Softly")
+    artist.songs.create(title: "Killing Me Softly")
 
-    visit artist_songs_path(artist.id)
+    visit artist_path(artist.id)
 
     within("#songs_list") do
       expect(page).to have_link("Killing Me Softly")

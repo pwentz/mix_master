@@ -1,10 +1,8 @@
 class SongsController < ApplicationController
-  def index
-    @songs = Song.all
-  end
 
   def new
-    @song = Song.new
+    @artist = Artist.find(params[:artist_id])
+    @song = @artist.songs.new
   end
 
   def show
@@ -12,13 +10,14 @@ class SongsController < ApplicationController
   end
 
   def create
-    @song = Song.new(song_params)
+    @artist = Artist.find(params[:artist_id])
+    @song = @artist.songs.create(song_params)
     if @song.save
       flash.notice = "Song created!"
-      redirect_to artist_songs_path(song.article_id)
+      redirect_to artist_path(@artist.id)
     else
       flash.notice = "Songs must have a valid title"
-      redirect_to new_artist_song_path(song.article_id)
+      redirect_to new_artist_song_path(@song.artist_id)
     end
   end
 
