@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715005815) do
+ActiveRecord::Schema.define(version: 20160715224543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,4 +21,13 @@ ActiveRecord::Schema.define(version: 20160715005815) do
     t.string "image_path"
   end
 
+  create_table "songs", force: :cascade do |t|
+    t.string  "title"
+    t.string  "genre"
+    t.integer "artist_id"
+  end
+
+  add_index "songs", ["artist_id"], name: "index_songs_on_artist_id", using: :btree
+
+  add_foreign_key "songs", "artists"
 end
