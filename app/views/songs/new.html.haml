@@ -1,0 +1,6 @@
+%h4 Add a new song for #{@artist.name}
+= form_for [@artist, @song] do |f|
+  = f.label :title
+  = f.text_field :title
+  %br/
+  = f.submit

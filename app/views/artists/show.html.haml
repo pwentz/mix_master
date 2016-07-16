@@ -1,3 +1,12 @@
 %h5#artist_name= @artist.name
 = image_tag @artist.image_path, :id => "artist_image"
+
+
+%ul#songs_list
+  - @artist.songs.each do |song|
+    %li
+      = link_to song.title, song_path(song)
+
+= link_to 'New song', new_artist_song_path(@artist.id)
+= link_to 'Edit', edit_artist_path
 = link_to 'Delete', artist_path(@artist), method: :DELETE
