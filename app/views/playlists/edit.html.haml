@@ -1,0 +1,13 @@
+%h5 Edit playlist
+
+= form_for @playlist do |f|
+  = f.label :name
+  = f.text_field :name
+  - Song.all.each do |song|
+    #div
+      - if @playlist.songs.exists?(song.id)
+        = check_box_tag :song_ids, song.id, true, :name => "playlist[song_ids][]", :id => "song-#{song.id}"
+      - else
+        = check_box_tag :song_ids, song.id, false, :name => "playlist[song_ids][]", :id => "song-#{song.id}"
+      = song.title
+  = f.submit

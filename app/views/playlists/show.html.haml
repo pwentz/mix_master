@@ -1,0 +1,8 @@
+%h5#playlist_name= @playlist.name
+
+%ul
+  - @playlist.songs.each do |song|
+    %li
+      = link_to "#{song.title}", song_path(song)
+
+= link_to 'Edit', edit_playlist_path(@playlist)
