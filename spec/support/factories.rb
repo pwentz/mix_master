@@ -1,6 +1,19 @@
 FactoryGirl.define do
   factory :artist do
-    name "Bob Marley"
-    image_path "http://cps-static.rovicorp.com/3/JPG_400/MI0003/146/MI0003146038.jpg"
+    name
+    image_path "http://static.tvtropes.org/pmwiki/pub/images/the-fugees_4802.jpg"
+  end
+
+  sequence :name, ["A", "B", "C"].cycle do |n|
+    "#{n}"
+  end
+
+  factory :song do
+    title
+    artist
+  end
+
+  sequence :title do |n|
+    "Title #{n}"
   end
 end

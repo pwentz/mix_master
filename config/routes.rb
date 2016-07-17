@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :songs, only: [:show]
+  resources :playlists, only: [:index, :new, :create, :show]
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

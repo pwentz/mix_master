@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "user creates a new song", :type => :feature do
   scenario "they click the create song button, and are taken to the new page" do
-    artist = Artist.create(name: "The Fugees", image_path: "http://static.tvtropes.org/pmwiki/pub/images/the-fugees_4802.jpg" )
+    artist = create(:artist)
     visit artist_path(artist.id)
 
     click_link 'New song'
@@ -12,7 +12,7 @@ describe "user creates a new song", :type => :feature do
   end
 
   scenario "they stay on page if title field is blank" do
-    artist = Artist.create(name: "The Fugees", image_path: "http://static.tvtropes.org/pmwiki/pub/images/the-fugees_4802.jpg" )
+    artist = create(:artist)
     visit new_artist_song_path(artist.id)
 
     click_button "Create Song"
@@ -21,7 +21,7 @@ describe "user creates a new song", :type => :feature do
   end
 
   scenario "they are redirected to index after clicking submit" do
-    artist = Artist.create(name: "The Fugees", image_path: "http://static.tvtropes.org/pmwiki/pub/images/the-fugees_4802.jpg" )
+    artist = create(:artist)
     visit new_artist_song_path(artist.id)
 
     within("form") do
@@ -33,13 +33,13 @@ describe "user creates a new song", :type => :feature do
   end
 
   scenario "they create a valid song and can see song title and link" do
-    artist = Artist.create(name: "The Fugees", image_path: "http://static.tvtropes.org/pmwiki/pub/images/the-fugees_4802.jpg" )
-    artist.songs.create(title: "Killing Me Softly")
+    artist = create(:artist)
+    song = create(:song, :title => "Killing Me Softly", :artist => artist)
 
     visit artist_path(artist.id)
 
     within("#songs_list") do
-      expect(page).to have_link("Killing Me Softly")
+      expect(page).to have_link artist.songs.first.title
     end
   end
 end
