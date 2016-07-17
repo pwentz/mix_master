@@ -25,8 +25,14 @@ class ArtistsController < ApplicationController
   end
 
   def update
-    @artist.update_attributes(article_params)
-    redirect_to artist_path(@artist)
+    new_artist = Artist.new(article_params)
+    set_artist
+    if new_artist.valid?
+      @artist.update_attributes(article_params)
+      redirect_to artist_path(@artist)
+    else
+      redirect_to edit_artist_path(@artist)
+    end
   end
 
   def destroy

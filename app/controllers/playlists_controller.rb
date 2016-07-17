@@ -8,9 +8,16 @@ class PlaylistsController < ApplicationController
   end
 
   def update
-    @playlist.songs.destroy_all
-    add_songs_to_playlist unless song_ids.nil?
-    redirect_to @playlist
+    set_playlist
+    updated_playlist = Playlist.new(playlist_params)
+    if updated_playlist.valid?
+      @playlist.update_attribute(:name, updated_playlist.name)
+      @playlist.songs.destroy_all
+      add_songs_to_playlist unless song_ids.nil?
+      redirect_to @playlist
+    else
+      render :edit
+    end
   end
 
   def show
@@ -24,7 +31,7 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.new(playlist_params)
     if @playlist.save
       add_songs_to_playlist unless song_ids.nil?
-      redirect_to @playlist
+      redirect_to playlists_path
     else
       render :new
     end
@@ -45,6 +52,6 @@ class PlaylistsController < ApplicationController
   end
 
   def playlist_params
-    params.require(:playlist).permit(:name)
+    params.require(:playlist).permit(:name, :song_ids)
   end
 end
