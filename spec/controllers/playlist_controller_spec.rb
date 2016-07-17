@@ -10,10 +10,11 @@ describe PlaylistsController, :type => :controller do
         expect(assigns(:playlist)).to be_persisted
       end
 
-      it "redirects to playlist's index page" do
+      it "redirects to playlist's show page" do
         post :create, :playlist => attributes_for(:playlist)
 
-        expect(response).to redirect_to(playlists_path)
+        expect(response).to redirect_to(Playlist.first)
+        expect(controller).to set_flash.to("Playlist created!")
       end
     end
 
@@ -51,6 +52,7 @@ describe PlaylistsController, :type => :controller do
         put :update, :id => playlist.to_param, :playlist => attributes_for(:playlist)
 
         expect(response).to redirect_to(playlist_path playlist)
+        expect(controller).to set_flash.to("Playlist updated!")
       end
     end
 
@@ -70,6 +72,7 @@ describe PlaylistsController, :type => :controller do
         put :update, :id => playlist.to_param, :playlist => attributes_for(:playlist, name: "")
 
         expect(response).to render_template("edit")
+        expect(controller).to set_flash.to("Please enter a name for your playlist")
       end
     end
   end

@@ -73,6 +73,8 @@ describe ArtistsController, :type => :controller do
 
       it "does not redirect to artist page, but re-renders the new template" do
         post :create, {:artist => attributes_for(:artist, name: nil)}
+
+        expect(controller).to set_flash.to("Please enter a longer name")
         expect(response).to render_template("new")
       end
     end
@@ -118,6 +120,8 @@ describe ArtistsController, :type => :controller do
         artist = create(:artist)
 
         put :update, {:id => artist.to_param, :artist => attributes_for(:artist, name: "")}
+
+        expect(controller).to set_flash.to("Please enter a longer name")
         expect(response).to redirect_to(edit_artist_path artist)
       end
     end

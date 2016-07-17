@@ -8,14 +8,13 @@ class PlaylistsController < ApplicationController
   end
 
   def update
-    set_playlist
     updated_playlist = Playlist.new(playlist_params)
     if updated_playlist.valid?
-      @playlist.update_attribute(:name, updated_playlist.name)
-      @playlist.songs.destroy_all
-      add_songs_to_playlist unless song_ids.nil?
+      @playlist.update_attributes(updated_playlist, song_ids)
+      flash.notice = "Playlist updated!"
       redirect_to @playlist
     else
+      flash.notice = "Please enter a name for your playlist"
       render :edit
     end
   end
@@ -30,9 +29,11 @@ class PlaylistsController < ApplicationController
   def create
     @playlist = Playlist.new(playlist_params)
     if @playlist.save
-      add_songs_to_playlist unless song_ids.nil?
-      redirect_to playlists_path
+      @playlist.update_songs(song_ids)
+      flash.notice = "Playlist created!"
+      redirect_to @playlist
     else
+      flash.notice = "Please enter a valid name"
       render :new
     end
   end
