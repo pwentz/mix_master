@@ -44,4 +44,20 @@ describe "user creates a new song", :type => :feature do
       expect(page).to have_link artist.songs.first.title
     end
   end
+
+  scenario "they click on the link and get taken to that song's page" do
+    artist = create(:artist)
+    song = create(:song, :artist => artist)
+
+    visit artist_path(artist.id)
+
+    within("#songs_list") do
+      click_link song.title
+    end
+
+    save_and_open_page
+    expect(current_path).to eq(artist_song_path(artist, song))
+    expect(page.find("p:first")).to have_content(song.title)
+    expect(page.find("p:last")).to have_content(artist.name)
+  end
 end

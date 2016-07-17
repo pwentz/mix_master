@@ -5,7 +5,7 @@
 %ul#songs_list
   - @artist.songs.each do |song|
     %li
-      = link_to song.title, song_path(song)
+      = link_to song.title, artist_song_path(@artist, song)
 
 = link_to 'New song', new_artist_song_path(@artist.id)
 = link_to 'Edit', edit_artist_path

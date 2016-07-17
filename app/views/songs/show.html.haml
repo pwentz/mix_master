@@ -1,7 +1,5 @@
-%p Title:
-= @song.title
-%p Artist:
-= @song.artist
-
-= link_to 'Edit this song', edit_song_path, :id => 'edit_song_link'
-= link_to 'Delete this song', artists_path, method: :delete, :id => 'delete_song_button' 
+%h5 Title:
+%p= @song.title
+%br/
+%h5 Artist:
+%p= @song.artist.name
