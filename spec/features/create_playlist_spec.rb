@@ -25,6 +25,7 @@ describe "User creates a playlist", :type => :feature do
     end
   end
 
+
   context "the submitted data is incomplete" do
     scenario "they see an error message" do
       visit new_playlist_path

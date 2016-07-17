@@ -13,6 +13,7 @@ class ArtistsController < ApplicationController
     if @artist.save
       redirect_to artist_path(@artist)
     else
+      flash.notice = "Please enter a longer name"
       render :new
     end
   end
@@ -25,8 +26,14 @@ class ArtistsController < ApplicationController
   end
 
   def update
-    @artist.update_attributes(article_params)
-    redirect_to artist_path(@artist)
+    new_artist = Artist.new(article_params)
+    if new_artist.valid?
+      @artist.update_attributes(article_params)
+      redirect_to artist_path(@artist)
+    else
+      flash.notice = "Please enter a longer name"
+      redirect_to edit_artist_path(@artist)
+    end
   end
 
   def destroy
