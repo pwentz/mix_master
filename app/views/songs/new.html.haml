@@ -1,7 +1,7 @@
 %h4 Add a new song for #{@artist.name}
 
 = form_for [@artist, @song] do |f|
-  = render partial: "shared/errors", locals: { target: @artist.songs.create }
+  = render partial: "shared/errors", locals: { target: @song }
 
   = f.label :title
   = f.text_field :title

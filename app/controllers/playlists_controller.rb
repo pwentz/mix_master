@@ -48,10 +48,6 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
   end
 
-  def add_songs_to_playlist
-    @playlist.songs << Song.find(song_ids)
-  end
-
   def playlist_params
     params.require(:playlist).permit(:name, :song_ids)
   end
