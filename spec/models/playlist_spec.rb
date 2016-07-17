@@ -5,5 +5,10 @@ describe Playlist, :type => :model do
     it { should have_many(:playlist_songs)}
     it { should have_many(:songs).through(:playlist_songs)}
   end
+
+  context "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name) }
+  end
 end
 

@@ -24,4 +24,14 @@ describe "User creates a playlist", :type => :feature do
       expect(page).to have_link song_3.title, href: song_path(song_3.id)
     end
   end
+
+  context "the submitted data is incomplete" do
+    scenario "they see an error message" do
+      visit new_playlist_path
+
+      click_button "Create Playlist"
+
+      expect(page.find("ul")).to have_content "Name can't be blank"
+    end
+  end
 end

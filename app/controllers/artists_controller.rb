@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  before_action :set_artist, only: [:update, :edit, :show, :destroy]
   def index
     @artists = Artist.all
   end
@@ -17,26 +18,27 @@ class ArtistsController < ApplicationController
   end
 
   def show
-    @artist = Artist.find(params[:id])
     @songs = @artist.songs.all
   end
 
   def edit
-    @artist = Artist.find(params[:id])
   end
 
   def update
-    artist = Artist.find(params[:id])
-    artist.update_attributes(article_params)
-    redirect_to artist_path(artist)
+    @artist.update_attributes(article_params)
+    redirect_to artist_path(@artist)
   end
 
   def destroy
-    Artist.find(params[:id]).destroy
+    @artist.destroy
     redirect_to artists_path
   end
 
   private
+
+  def set_artist
+    @artist = Artist.find(params[:id])
+  end
 
   def article_params
     params.require(:artist).permit(:name, :image_path)
