@@ -9,6 +9,8 @@ describe "user creates a new song", :type => :feature do
 
     expect(current_path).to eq(new_artist_song_path(artist.id))
     expect(page).to have_css("form")
+    expect(page.find(".new_song")).not_to have_content("Title can't be blank")
+    expect(page.find(".new_song")).not_to have_content("Title is too short (minimum is zero characters)")
   end
 
   scenario "they stay on page if title field is blank" do
@@ -18,7 +20,6 @@ describe "user creates a new song", :type => :feature do
     click_button "Create Song"
 
     expect(page.find("ul")).to have_content("Title can't be blank")
-    expect(current_path).to eq(new_artist_song_path(artist.id))
   end
 
   scenario "they are redirected to index after clicking submit" do
