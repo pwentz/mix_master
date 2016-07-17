@@ -16,4 +16,8 @@ FactoryGirl.define do
   sequence :title do |n|
     "Title #{n}"
   end
+
+  factory :playlist do
+    name 
+  end
 end
