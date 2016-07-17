@@ -1,11 +1,5 @@
 = form_for @artist do |f|
-  - if @artist.errors.any?
-    %h2
-      = pluralize(@artist.errors.count, "error") 
-      prohibited this record from being saved.
-    %ul
-      - @artist.errors.full_messages.each do |message|
-        %li= message
+  = render partial: "shared/errors", locals: { target: @artist}
 
   = f.label :name
   = f.text_field :name

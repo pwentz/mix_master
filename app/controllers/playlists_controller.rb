@@ -1,20 +1,19 @@
 class PlaylistsController < ApplicationController
+  before_action :set_playlist, only: [:edit, :update, :show]
+
   def index
   end
 
   def edit
-    @playlist = Playlist.find(params[:id])
   end
 
   def update
-    @playlist = Playlist.find(params[:id])
     @playlist.songs.destroy_all
-    @playlist.songs << Song.find(params[:playlist][:song_ids])
+    add_songs_to_playlist unless song_ids.nil?
     redirect_to @playlist
   end
 
   def show
-    @playlist = Playlist.find(params[:id])
   end
 
   def new
@@ -22,12 +21,28 @@ class PlaylistsController < ApplicationController
   end
 
   def create
-    @playlist = Playlist.create(playlist_params)
-    @playlist.songs << Song.find(params[:playlist][:song_ids])
-    redirect_to @playlist
+    @playlist = Playlist.new(playlist_params)
+    if @playlist.save
+      add_songs_to_playlist unless song_ids.nil?
+      redirect_to @playlist
+    else
+      render :new
+    end
   end
 
   private
+
+  def song_ids
+    params[:playlist][:song_ids]
+  end
+
+  def set_playlist
+    @playlist = Playlist.find(params[:id])
+  end
+
+  def add_songs_to_playlist
+    @playlist.songs << Song.find(song_ids)
+  end
 
   def playlist_params
     params.require(:playlist).permit(:name)

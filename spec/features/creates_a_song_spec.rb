@@ -17,6 +17,7 @@ describe "user creates a new song", :type => :feature do
 
     click_button "Create Song"
 
+    expect(page.find("ul")).to have_content("Title can't be blank")
     expect(current_path).to eq(new_artist_song_path(artist.id))
   end
 
