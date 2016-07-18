@@ -14,6 +14,18 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+OmniAuth.config.test_mode = true
+
+auth_data = {
+  'provider' => "spotify",
+  'info' => {
+    'display_name'=> "Fake User",
+    'id' => "12345"
+  }
+}
+
+OmniAuth.config.add_mock(:spotify, auth_data)
+#
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

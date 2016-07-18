@@ -17,6 +17,8 @@ gem 'omniauth-oauth2'
 gem 'pry-rails'
 gem 'unicorn'
 gem 'faker'
+gem 'awesome_print'
+gem 'figaro'
 #
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

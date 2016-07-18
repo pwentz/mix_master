@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
 
   resources :playlists, only: [:index, :new, :create, :show, :edit, :update]
+  get '/auth/spotify/callback', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

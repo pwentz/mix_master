@@ -19,5 +19,16 @@ FactoryGirl.define do
 
   factory :playlist do
     name 
+    user
+  end
+
+  factory :user do
+    provider 'spotify'
+    uid 
+    name 'Fake User'
+  end
+
+  sequence :uid do |n|
+   "123#{n}"
   end
 end

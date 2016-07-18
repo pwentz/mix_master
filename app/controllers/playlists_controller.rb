@@ -2,6 +2,11 @@ class PlaylistsController < ApplicationController
   before_action :set_playlist, only: [:edit, :update, :show]
 
   def index
+    if current_user
+      @user = current_user
+    else
+      @user = User.new
+    end
   end
 
   def edit
@@ -29,7 +34,7 @@ class PlaylistsController < ApplicationController
   def create
     @playlist = Playlist.new(playlist_params)
     if @playlist.save
-      @playlist.update_songs(song_ids)
+      @playlist.update_songs(current_user, song_ids)
       flash.notice = "Playlist created!"
       redirect_to @playlist
     else
