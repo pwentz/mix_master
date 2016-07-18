@@ -4,14 +4,14 @@ class Playlist < ActiveRecord::Base
   belongs_to :user
   validates :name, presence: true, length: (0..45)
 
-  def update_attributes(updated_playlist, song_ids)
+  def update_attributes(updated_playlist)
     update_attribute(:name, updated_playlist.name)
     songs.destroy_all
-    update_songs(song_ids)
   end
 
-  def update_songs(current_user, song_ids)
+  def update_songs(user, song_ids)
     songs << Song.find(song_ids) unless song_ids.nil?
-    current_user.playlists << self
+    user.playlists << self
   end
+
 end

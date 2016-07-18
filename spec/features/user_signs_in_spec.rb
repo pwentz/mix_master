@@ -11,12 +11,5 @@ describe "User signs in with Spotify", :type => :feature do
     expect(login_div).to have_content(User.first.name)
     expect(login_div).not_to have_content("Sign in with Spotify")
   end
-
-  scenario "they see all of their playlists, with links to their pages" do
-    pending
-
-    expect(page.find("li:first")).to have_link(playlist.name)
-  end
-
 end
 

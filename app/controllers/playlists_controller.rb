@@ -1,12 +1,8 @@
 class PlaylistsController < ApplicationController
   before_action :set_playlist, only: [:edit, :update, :show]
+  before_action :current_user?, only: [:update, :create, :index]
 
   def index
-    if current_user
-      @user = current_user
-    else
-      @user = User.new
-    end
   end
 
   def edit
@@ -15,7 +11,8 @@ class PlaylistsController < ApplicationController
   def update
     updated_playlist = Playlist.new(playlist_params)
     if updated_playlist.valid?
-      @playlist.update_attributes(updated_playlist, song_ids)
+      @playlist.update_attributes(updated_playlist)
+      @playlist.update_songs(@user, song_ids)
       flash.notice = "Playlist updated!"
       redirect_to @playlist
     else
@@ -34,7 +31,7 @@ class PlaylistsController < ApplicationController
   def create
     @playlist = Playlist.new(playlist_params)
     if @playlist.save
-      @playlist.update_songs(current_user, song_ids)
+      @playlist.update_songs(@user, song_ids)
       flash.notice = "Playlist created!"
       redirect_to @playlist
     else
@@ -44,6 +41,14 @@ class PlaylistsController < ApplicationController
   end
 
   private
+
+  def current_user?
+    if current_user.nil?
+      @user = User.new
+    else
+      @user = current_user
+    end
+  end
 
   def song_ids
     params[:playlist][:song_ids]

@@ -55,7 +55,6 @@ describe "user creates a new song", :type => :feature do
       click_link song.title
     end
 
-    save_and_open_page
     expect(current_path).to eq(artist_song_path(artist, song))
     expect(page.find("p:first")).to have_content(song.title)
     expect(page.find("p:last")).to have_content(artist.name)

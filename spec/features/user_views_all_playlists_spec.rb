@@ -6,18 +6,22 @@ require 'rails_helper'
 #and each name should link to thta playlist's individual page
 
 describe "User views all playlists", :test => :feature do
-  scenario "they see links to all playlist's individual pages" do
-    playlist_one, playlist_two = create_list(:playlist, 2)
+  context "while signed-in" do
+    it "shows you your playlists on the home page" do
+      visit playlists_path
+      click_link "Sign in with Spotify"
+      user = User.first
+      playlist = create(:playlist)
+      user.playlists << playlist
 
-    visit playlists_path
+      visit playlists_path
 
-    within("ul") do
-      expect(page).to have_link(playlist_one.name)
-      expect(page).to have_link(playlist_two.name)
+      expect(page.find("ul")).to have_link(playlist.name)
     end
+  end
 
-    click_link playlist_two.name
-
-    expect(current_path).to eq(playlist_path(playlist_two))
+  context "while not signed-in" do
+    it "shows you your playlists on the home page" do
+    end
   end
 end
